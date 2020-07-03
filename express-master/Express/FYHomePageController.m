@@ -1,31 +1,31 @@
 
-#import "FirstViewController.h"
+#import "FYHomePageController.h"
 #import "AFNetworking.h"
 #import "Base64Additions.h"
 #import "MD5.h"
 #import "ExpressInfo.h"
-#import "ExpressTracesViewController.h"
-#import "ScanQRCodeViewController.h"
+#import "FYExpressTracesController.h"
+#import "FYScanQRCodeController.h"
 
-#define eBusinessID @"1261753"
-#define appKey @"d715f778-086b-4a25-95be-59dff451abab"
+#define eBusinessID @"1651956"
+#define appKey @"514f18a8-3bd7-468c-a7ea-a4cb6248c1ca"
 #define reqURL @"http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx"
 
-
-@interface FirstViewController ()<UITextFieldDelegate>
+@interface FYHomePageController ()<UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *expressNum; //快递单号
 
+@property (nonatomic,strong) NSDictionary *dict;
+
 @end
 
-@implementation FirstViewController
+@implementation FYHomePageController
+
 NSDictionary* expressNameAndCode;
 NSString* shipperCodeUser;
-NSString* logisticCodeUser;
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    shipperCodeUser = [expressNameAndCode objectForKey:self.expressComName];
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(haddleQRCode:) name:@"do" object:nil];
 }
@@ -40,22 +40,24 @@ NSString* logisticCodeUser;
     //1、根据单号查询快递公司
     //2、查询物流信息
     //3、处理物流信息
-    
-    // ShipperCode 快递公司编码
-    // LogisticCode 物流单号
-    // OrderCode 订单编号
-    
+
     // 查询快递公司编码
     __weak typeof(self) weakSelf = self;
     [self fetchShipperCodeWithLogisticCode:self.expressNum.text
                              successHandle:^(NSArray *shippers) {
-                                  NSLog(@"%@",shippers);
+                                 
                                  if (shippers.count >0) {
+                                     
                                      NSDictionary *dict = [shippers firstObject];
+                                     
                                      shipperCodeUser = [dict objectForKey:@"ShipperCode"];
+                                     
                                  }
+        
+                                // 根据快递公司编码和快递单号查询快递详情
                                 [weakSelf fechExpressInfoWithShipperCode:shipperCodeUser
                                                             LogisticCode:weakSelf.expressNum.text];
+        
                              } errorHandle:^(NSError * error) {
                                  NSLog(@"%@",error);
                              }];
@@ -71,14 +73,17 @@ NSString* logisticCodeUser;
                           LogisticCode:(NSString *)logisticCode {
 
     NSMutableDictionary* params = [[NSMutableDictionary alloc]init];
+    
     NSString* requestData = [NSString stringWithFormat:@"{\"OrderCode\":\"\",\"ShipperCode\":\"%@\",\"LogisticCode\":\"%@\"}",
                              shipperCode,logisticCode];
+    
     [params setObject:[requestData stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] forKey:@"RequestData"];
     
+    // 签名规则 请求内容(未编码)+AppKey MD5 ，然后Base64编码，进行URL(utf-8)编码
     NSString* dataSignTmp = [[NSString alloc]initWithFormat:@"%@%@",requestData,appKey];
+    
     NSString* dataSign = [[MD5 md5String:dataSignTmp] base64String];
     
-    //签名规则 请求内容(未编码)+AppKey MD5 ，然后Base64编码，进行URL(utf-8)编码
     [params setObject:[dataSign stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] forKey:@"DataSign"];
     
     [params setObject:eBusinessID forKey:@"EBusinessID"];  //商户 ID
@@ -97,18 +102,22 @@ NSString* logisticCodeUser;
                                                                error:nil];
         NSLog(@"请求成功：%@",json);
         
+        // 快递轨迹
         NSMutableArray* expressTraces = [[NSMutableArray alloc]init];
         for (NSDictionary* traces in [json objectForKey:@"Traces"]) {
             [expressTraces insertObject:traces atIndex:0];
         }
+        
+        // 快递公司编码
         NSString* shipperCode = [json objectForKey:@"ShipperCode"];
+        // 快递单号
         NSString* logisticCode = [json objectForKey:@"LogisticCode"];
         
         ExpressInfo* express = [[ExpressInfo alloc]initWitfShipperCode:shipperCode
                                                        andlogisticCode:logisticCode
                                                       andexpressTraces:expressTraces];
-
-        ExpressTracesViewController* expressTracesVC = [[ExpressTracesViewController alloc]init];
+        // 跳转快递轨迹详情
+        FYExpressTracesController* expressTracesVC = [[FYExpressTracesController alloc]init];
         expressTracesVC.express = express;
         expressTracesVC.expressdict = json;
         self.hidesBottomBarWhenPushed = YES;
@@ -121,11 +130,11 @@ NSString* logisticCodeUser;
 }
 
 /**
- 自动识别快递公司编码
+ 自动识别快递公司编码 (单号识别)
  
  @param LogisticCode 快递单号
  @param successHandle 成功回调公司编码信息
- @param errorHandle 错误回调
+ @param errorHandle 错误回调 773043492361968
  */
 - (void)fetchShipperCodeWithLogisticCode:(NSString *)logisticCode
                                  successHandle:(void(^)(NSArray * shippers))successHandle
@@ -134,12 +143,15 @@ NSString* logisticCodeUser;
     NSMutableDictionary* params = [[NSMutableDictionary alloc]init];
     NSString* requestData = [NSString stringWithFormat:@"{\"LogisticCode\":\"%@\"}",
                              logisticCode];
+    
     [params setObject:[requestData stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] forKey:@"RequestData"];
     
+    //签名规则 请求内容(未编码)+AppKey MD5 ，然后Base64编码，进行URL(utf-8)编码
+    
     NSString* dataSignTmp = [[NSString alloc]initWithFormat:@"%@%@",requestData,appKey];
+    
     NSString* dataSign = [[MD5 md5String:dataSignTmp] base64String];
     
-    //签名规则 请求内容(未编码)+AppKey MD5 ，然后Base64编码，进行URL(utf-8)编码
     [params setObject:[dataSign stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]] forKey:@"DataSign"];
     
     [params setObject:eBusinessID forKey:@"EBusinessID"];  //商户 ID
@@ -160,7 +172,9 @@ NSString* logisticCodeUser;
                                                                error:nil];
         NSLog(@" ==== 查询快递公司编码成功===== %@",json);
         successHandle([json objectForKey:@"Shippers"]);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
         errorHandle(error);
         NSLog(@" ===== 查询快递公司编码失败==== %@",error.description);
     }];
@@ -169,10 +183,19 @@ NSString* logisticCodeUser;
 #pragma mark - 二维码扫描查询
 
 -(void)haddleQRCode:(NSNotification*)sender{
-    //self.expressNum.text = (NSString* )sender;
+    
+    // 扫描结果
     NSDictionary* dc = sender.userInfo;
+    
+    if (self.dict == dc) return;
+    
+    self.dict = dc;
+    
     NSLog(@"sender:%@",[dc objectForKey:@"userInfo"]);
+    
     self.expressNum.text = [dc objectForKey:@"userInfo"];
+    
+    // 查询
     [self expressSearch:nil];
 }
 
@@ -181,9 +204,20 @@ NSString* logisticCodeUser;
     [self.expressNum resignFirstResponder];
 }
 
+- (NSDictionary *)dict {
+    if (!_dict) {
+        _dict = [NSDictionary dictionary];
+    }
+    return _dict;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 @end

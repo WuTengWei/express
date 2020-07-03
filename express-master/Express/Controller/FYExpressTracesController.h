@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "ExpressInfo.h"
 
-@interface ExpressTracesViewController : UITableViewController
+@interface FYExpressTracesController : UITableViewController
 
 @property (strong, nonatomic) ExpressInfo* express;
 @property (strong,nonatomic) NSDictionary *expressdict;

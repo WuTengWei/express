@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +13,7 @@
                 <navigationController id="4Jw-fq-FMT" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="快递查询" image="search" id="iKG-Ht-0vd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ix3-Ca-aOP">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -29,7 +27,7 @@
         <!--快递查询-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="FirstViewController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="FYHomePageController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -39,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="输入快递单号" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GKD-VH-YTL">
-                                <rect key="frame" x="20" y="74" width="335" height="45"/>
+                                <rect key="frame" x="20" y="54" width="335" height="45"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="ywi-HH-6RW"/>
@@ -51,7 +49,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKb-Tf-OK6">
-                                <rect key="frame" x="100" y="159" width="175" height="45"/>
+                                <rect key="frame" x="100" y="139" width="175" height="45"/>
                                 <color key="backgroundColor" red="0.24995782456609572" green="0.70780651517815996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="5i8-XK-BTL"/>
@@ -97,7 +95,7 @@
                 <navigationController id="DSb-mf-07l" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="快递历史" image="foot" id="WpY-vs-JrQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qhf-hE-DLv">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -111,7 +109,7 @@
         <!--快递历史-->
         <scene sceneID="ZWh-f5-Q1q">
             <objects>
-                <viewController id="CVo-E9-4hP" customClass="ExpressHistoryViewController" sceneMemberID="viewController">
+                <viewController id="CVo-E9-4hP" customClass="FYExpressHistoryController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="n25-6x-hyE"/>
                         <viewControllerLayoutGuide type="bottom" id="7h6-3h-pC4"/>
@@ -141,42 +139,53 @@
             </objects>
             <point key="canvasLocation" x="-1050" y="407"/>
         </scene>
-        <!--ScanQR Code View Controller-->
+        <!--ScanQR Code Controller-->
         <scene sceneID="Rf8-Cg-ACX">
             <objects>
-                <viewController id="tHd-Xe-Rba" customClass="ScanQRCodeViewController" sceneMemberID="viewController">
+                <viewController id="tHd-Xe-Rba" customClass="FYScanQRCodeController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Jcy-68-9nA"/>
                         <viewControllerLayoutGuide type="bottom" id="T0t-mT-D9S"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Trk-Ij-cRk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ED-lM-Trp" userLabel="容器视图">
-                                <rect key="frame" x="37" y="183" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ED-lM-Trp" userLabel="容器视图">
+                                <rect key="frame" x="37.5" y="153.5" width="300" height="300"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="qrcode_border" translatesAutoresizingMaskIntoConstraints="NO" id="BSM-AB-IiN" userLabel="边框">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrcode_border" translatesAutoresizingMaskIntoConstraints="NO" id="BSM-AB-IiN" userLabel="边框">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="qrcode_scanline_qrcode" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-bU-qqg" userLabel="冲击波">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrcode_scanline_qrcode" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-bU-qqg" userLabel="冲击波">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="300" id="JOK-Cm-oFf"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="gCO-bU-qqg" firstAttribute="top" secondItem="7ED-lM-Trp" secondAttribute="top" id="4Ja-Kd-hlY"/>
+                                    <constraint firstAttribute="width" constant="300" id="6Lv-Ts-B1R"/>
+                                    <constraint firstItem="gCO-bU-qqg" firstAttribute="centerX" secondItem="7ED-lM-Trp" secondAttribute="centerX" id="Cdn-1s-E7B"/>
+                                    <constraint firstItem="gCO-bU-qqg" firstAttribute="leading" secondItem="7ED-lM-Trp" secondAttribute="leading" id="Dd4-p7-7ou"/>
+                                    <constraint firstItem="BSM-AB-IiN" firstAttribute="leading" secondItem="7ED-lM-Trp" secondAttribute="leading" id="LxV-Tn-QzD"/>
+                                    <constraint firstItem="BSM-AB-IiN" firstAttribute="top" secondItem="7ED-lM-Trp" secondAttribute="top" id="Ou1-3b-Wi3"/>
+                                    <constraint firstAttribute="trailing" secondItem="gCO-bU-qqg" secondAttribute="trailing" id="QHZ-uZ-6cI"/>
+                                    <constraint firstAttribute="height" constant="300" id="fcf-pC-ZUy"/>
+                                    <constraint firstAttribute="trailing" secondItem="BSM-AB-IiN" secondAttribute="trailing" id="jQf-4q-4lG"/>
+                                    <constraint firstAttribute="bottom" secondItem="BSM-AB-IiN" secondAttribute="bottom" id="zsF-qz-sHa"/>
+                                </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="将二维码放入框内, 即可扫描二维码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQD-xw-6p1" userLabel="customLabel">
-                                <rect key="frame" x="37" y="503" width="300" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="将二维码放入框内, 即可扫描二维码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQD-xw-6p1" userLabel="customLabel">
+                                <rect key="frame" x="53" y="483.5" width="269" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fwg-dU-pr8">
-                                <rect key="frame" x="31" y="40" width="40" height="30"/>
+                                <rect key="frame" x="31" y="20" width="40" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="hKh-tF-L1L"/>
                                 </constraints>
@@ -186,7 +195,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCy-zu-FWy">
-                                <rect key="frame" x="279" y="35" width="60" height="30"/>
+                                <rect key="frame" x="279" y="15" width="60" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="DKz-sC-JeC"/>
                                 </constraints>
@@ -196,7 +205,7 @@
                                 </connections>
                             </button>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBt-zi-7A6" userLabel="Custom Bar">
-                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="598" width="375" height="49"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <items>
                                     <tabBarItem title="二维码" image="qrcode_tabbar_icon_qrcode" id="92T-Tr-13Y"/>
@@ -207,9 +216,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="7ED-lM-Trp" firstAttribute="centerY" secondItem="Trk-Ij-cRk" secondAttribute="centerY" constant="-20" id="15i-CS-kDg"/>
                             <constraint firstItem="kBt-zi-7A6" firstAttribute="leading" secondItem="Trk-Ij-cRk" secondAttribute="leading" id="7kL-Y2-Clw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YCy-zu-FWy" secondAttribute="trailing" constant="20" id="Day-EH-Tfb"/>
+                            <constraint firstItem="hQD-xw-6p1" firstAttribute="top" secondItem="7ED-lM-Trp" secondAttribute="bottom" constant="30" id="EKe-rG-lg5"/>
                             <constraint firstItem="Fwg-dU-pr8" firstAttribute="leading" secondItem="Trk-Ij-cRk" secondAttribute="leadingMargin" constant="15" id="Ljf-MY-Fy8"/>
+                            <constraint firstItem="hQD-xw-6p1" firstAttribute="centerX" secondItem="Trk-Ij-cRk" secondAttribute="centerX" id="VHD-5v-ZMW"/>
+                            <constraint firstItem="7ED-lM-Trp" firstAttribute="centerX" secondItem="Trk-Ij-cRk" secondAttribute="centerX" id="bAx-pe-e6q"/>
                             <constraint firstItem="Fwg-dU-pr8" firstAttribute="top" secondItem="Jcy-68-9nA" secondAttribute="bottom" constant="20" id="cCK-Gs-Z1L"/>
                             <constraint firstItem="YCy-zu-FWy" firstAttribute="top" secondItem="Jcy-68-9nA" secondAttribute="bottom" constant="15" id="rtc-Zy-wDE"/>
                             <constraint firstItem="T0t-mT-D9S" firstAttribute="top" secondItem="kBt-zi-7A6" secondAttribute="bottom" id="tWy-5b-Z1F"/>
@@ -222,6 +235,7 @@
                         <outlet property="customContainerView" destination="7ED-lM-Trp" id="Cum-JZ-HJu"/>
                         <outlet property="customLabel" destination="hQD-xw-6p1" id="RBQ-YW-1mK"/>
                         <outlet property="scanLineImageView" destination="gCO-bU-qqg" id="tGq-MR-ozd"/>
+                        <outlet property="topConstraint" destination="4Ja-Kd-hlY" id="qam-ZB-G4N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Esw-Vc-Jcs" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -1,15 +1,8 @@
-//
-//  DBTools.m
-//  Express
-//
-//  Created by WTW on 2019/7/9.
-//  Copyright © 2019 LeeLom. All rights reserved.
-//
 
-#import "DBTools.h"
+#import "FYDBTools.h"
 #import "FMDB.h"
 
-@implementation DBTools
+@implementation FYDBTools
 
 static FMDatabase *_db;
 + (void)initialize

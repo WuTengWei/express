@@ -1,14 +1,17 @@
 
-#import "ExpressTracesViewController.h"
-#import "DBTools.h"
+#import "FYExpressTracesController.h"
+#import "FYDBTools.h"
 
-@interface ExpressTracesViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface FYExpressTracesController ()
+
+<UITableViewDelegate,
+UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
-@implementation ExpressTracesViewController
+@implementation FYExpressTracesController
 @synthesize tableView;
 
 NSString* shipperCode;//快递名称
@@ -19,9 +22,15 @@ NSDictionary* expressNameAndCodeTrace;//快递字典
 
 -(void)saveExpressTraces{
     
+    // 保存快递信息到数据库
     NSArray *arr = [NSArray arrayWithObject:self.expressdict];
-    [DBTools saveStatuses:arr];
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"保存成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [FYDBTools saveStatuses:arr];
+    
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                   message:@"保存成功"
+                                                  delegate:self
+                                         cancelButtonTitle:@"确定"
+                                         otherButtonTitles:nil, nil];
     [alert show];
 }
 
@@ -47,16 +56,12 @@ NSDictionary* expressNameAndCodeTrace;//快递字典
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
+
+//section 1: 显示快递单号和快递名称
+//Section 2: 显示快递轨迹
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //分成两个Section
-    //section 1:To show the title
-    //Section 2:To show the traces
+   
     return 2;
 }
 
@@ -70,47 +75,62 @@ NSDictionary* expressNameAndCodeTrace;//快递字典
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell;
-    //1. 返回快递名称 单号数据
+    
+    // 快递名称 单号数据
     if (indexPath.section == 0) {
+        
         static NSString* cellIndentifier = @"UITableViewIndentifierKey";
         cell = [self.tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIndentifier];
+            
             cell.textLabel.text = [expressNameAndCodeTrace objectForKey:shipperCode];
-            NSLog(@"%@++++%@",[expressNameAndCodeTrace objectForKey:shipperCode],shipperCode);
+            
             cell.detailTextLabel.text = logisticCode;
+            
             cell.imageView.image = [UIImage imageNamed:@"express-history"];
+            
             cell.textLabel.font = [UIFont systemFontOfSize:12];
+            
             cell.textLabel.textColor = [UIColor darkTextColor];
+            
         }
-    }else if (indexPath.section == 1){
-        //2. 返回快递的轨迹
+    }else if (indexPath.section == 1) {  // 返回快递的轨迹
+        
         static NSString* cellIndentifier = @"UITabelViewCellTracesSystem";
+        
         cell = [self.tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIndentifier];
         }
+        
         NSDictionary* traces = expressTraces[indexPath.row];
-        NSString* tracesInfoString = [traces objectForKey:@"AcceptStation"];//得到物流轨迹
-        NSString* timeInfoString = [traces objectForKey:@"AcceptTime"];//获得物流时间
-        //NSString* secondsString = [timeInfoString substringWithRange:NSMakeRange(11, 5)];//获得小时和分钟
-        //NSString* dayString = [timeInfoString substringToIndex:10];//获得年月日
+        
+        NSString* tracesInfoString = [traces objectForKey:@"AcceptStation"];//物流轨迹
+        
+        NSString* timeInfoString = [traces objectForKey:@"AcceptTime"];//物流时间
+        
         cell.textLabel.text = timeInfoString;
+        
         cell.detailTextLabel.text = tracesInfoString;
+        
         cell.imageView.image = [UIImage imageNamed:@"express-history"];
-        //调整UILabel自动换行
+        
         cell.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
         cell.detailTextLabel.numberOfLines = 0;
         
-        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica"  size:11];
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
-        cell.textLabel.textColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-
     }
     return cell;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    
+    return 80;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

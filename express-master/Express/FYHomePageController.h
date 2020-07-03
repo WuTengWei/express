@@ -2,7 +2,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FYHomePageController : UIViewController
+
 @property (strong, nonatomic)NSString* expressComName;
 @property (strong, nonatomic)NSString* expressNumQrCode;
 
